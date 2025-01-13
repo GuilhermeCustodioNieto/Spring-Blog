@@ -1,5 +1,6 @@
 package com.guilherme.SpringBlog.MidnightBlog.resources;
 
+import com.guilherme.SpringBlog.MidnightBlog.domain.Post;
 import com.guilherme.SpringBlog.MidnightBlog.domain.User;
 import com.guilherme.SpringBlog.MidnightBlog.dto.UserDTO;
 import com.guilherme.SpringBlog.MidnightBlog.services.UserService;
@@ -59,5 +60,12 @@ public class UserResource {
 
         obj = userService.update(obj);
         return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(value = "/{id}/posts", method = RequestMethod.GET)
+    public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {
+        User obj = userService.findById(id);
+
+        return ResponseEntity.ok().body(obj.getPosts());
     }
 }
