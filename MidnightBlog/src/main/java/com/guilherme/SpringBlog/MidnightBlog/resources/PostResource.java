@@ -3,6 +3,7 @@ package com.guilherme.SpringBlog.MidnightBlog.resources;
 import com.guilherme.SpringBlog.MidnightBlog.domain.Post;
 import com.guilherme.SpringBlog.MidnightBlog.domain.User;
 import com.guilherme.SpringBlog.MidnightBlog.dto.UserDTO;
+import com.guilherme.SpringBlog.MidnightBlog.resources.util.URL;
 import com.guilherme.SpringBlog.MidnightBlog.services.PostService;
 import com.guilherme.SpringBlog.MidnightBlog.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,5 +33,14 @@ public class PostResource {
         Post obj = postService.findById(id);
 
         return ResponseEntity.ok().body(obj);
+    }
+
+    @RequestMapping(value = "/titlesearch", method = RequestMethod.GET)
+    public ResponseEntity<List<Post>> findByTitle(@RequestParam(value = "text", defaultValue = "") String text ) {
+        text = URL.decodeParam(text);
+        System.out.println(text);
+        List<Post> posts = postService.findByTitle(text);
+
+        return ResponseEntity.ok().body(posts);
     }
 }
